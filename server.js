@@ -2,6 +2,17 @@ const inquirer = require('inquirer');
 
 
 
+
+
+
+
+
+
+
+
+
+
+//Initial prompt
 const promptUser = () => {
     return inquirer.prompt([
         {
