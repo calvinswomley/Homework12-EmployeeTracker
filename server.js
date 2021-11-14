@@ -13,6 +13,30 @@ const promptUser = () => {
     ])
     .then((answers) => {
         console.log(answers)
+        if (answers.mainmenu === 'View All Employees') {
+            console.log('1')
+        }
+        if (answers.mainmenu === 'Add Employee') {
+            console.log('2')
+        }
+        if (answers.mainmenu === 'Update Employee Role') {
+            console.log('3')
+        }
+        if (answers.mainmenu === 'View All Roles') {
+            console.log('4')
+        }
+        if (answers.mainmenu === 'Add Role') {
+            console.log('5')
+        }
+        if (answers.mainmenu === 'View All Departments') {
+            console.log('6')
+        }
+        if (answers.mainmenu === 'Add Department') {
+            console.log('7')
+        }
+        if (answers.mainmenu === 'Quit') {
+            console.log('8')
+        }
     })
     .catch((error) => {
         if (error.isTtyError) {
