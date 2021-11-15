@@ -4,7 +4,7 @@ VALUES  (001, 'Product Development'),
         (003, 'Support'),
         (004, 'Sales');
 
-    s
+    
 INSERT INTO employee_role (id, name)
 VALUES  (101, 'Product Engineer', 100000, 001),
         (102, 'Sales Manager', 150000, 004),
