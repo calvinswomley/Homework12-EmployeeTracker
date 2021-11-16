@@ -1,6 +1,7 @@
+const { response } = require('express');
 const express = require('express');
 const inquirer = require('inquirer');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -34,6 +35,9 @@ const promptUser = () => {
         console.log(answers)
         if (answers.mainmenu === 'View All Employees') {
             console.log('1')
+            db.query('SELECT * FROM employee', function (err, results) {
+                console.log(results)
+            });
         }
         if (answers.mainmenu === 'Add Employee') {
             console.log('2')
