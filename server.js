@@ -1,13 +1,13 @@
-const { response } = require('express');
-const express = require('express');
+//const { response } = require('express');
+//const express = require('express');
 const inquirer = require('inquirer');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
-const PORT = process.env.PORT || 3001;
-const app = express();
+//const PORT = process.env.PORT || 3001;
+//const app = express();
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+////app.use(express.urlencoded({ extended: false }));
+///app.use(express.json());
 
 // Connect to database
 const db = mysql.createConnection(
@@ -32,12 +32,8 @@ const promptUser = () => {
         },
     ])
     .then((answers) => {
-        console.log(answers)
         if (answers.mainmenu === 'View All Employees') {
-            console.log('1')
-            db.query('SELECT * FROM employee', function (err, results) {
-                console.log(results)
-            });
+            db.query(`SELECT * FROM employee`, function (err, results) {console.log(results)});
         }
         if (answers.mainmenu === 'Add Employee') {
             console.log('2')
@@ -46,13 +42,15 @@ const promptUser = () => {
             console.log('3')
         }
         if (answers.mainmenu === 'View All Roles') {
-            console.log('4')
+            if (answers.mainmenu === 'View All Employees') {
+                db.query('SELECT * FROM employee_roles', function (err, results) {console.log(results)});
         }
         if (answers.mainmenu === 'Add Role') {
             console.log('5')
         }
         if (answers.mainmenu === 'View All Departments') {
-            console.log('6')
+            if (answers.mainmenu === 'View All Employees') {
+                db.query('SELECT * FROM employee_roles', function (err, results) {console.log(results)});
         }
         if (answers.mainmenu === 'Add Department') {
             console.log('7')
@@ -73,7 +71,7 @@ const promptUser = () => {
 promptUser();
 
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+//app.listen(PORT, () => {
+ //   console.log(`Server running on port ${PORT}`);
+ // });
   
