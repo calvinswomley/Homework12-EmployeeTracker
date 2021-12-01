@@ -1,13 +1,7 @@
-const { response } = require('express');
-const express = require('express');
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
-
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+//const mysqlP = require('promise-mysql2');
+const cTable = require('console.table');
 
 // Connect to database
 const db = mysql.createConnection(
@@ -33,7 +27,7 @@ const departmentPrompt = () => {
         console.log(newDepName);
         db.query(`INSERT INTO department (depname) VALUES (?);`, newDepName, function (err, results) {
             promptUser();
-            console.log(results);
+            console.table(results);
         })
     })
 }
@@ -69,13 +63,13 @@ const rolePrompt = () => {
         var answerSalary = answers.newRoleSalary;
         var departmentId;
         db.query(`SELECT id FROM department WHERE depname = '${answers.roleDepartment}';`, function (err, results2) {
-            console.log(answers.roleDepartment);
+            console.table(answers.roleDepartment);
             departmentId = results2[0].id;
-            console.log(departmentId);
+            console.table(departmentId);
         });
         db.query(`INSERT INTO employee_role (title, salary, department_id) VALUES ( ?, ?, ?);`, [answerTitle, answerSalary, departmentId], function (err, results) {
             promptUser();
-            console.log(results);
+            console.table(results);
         });
     });
 }
@@ -121,18 +115,19 @@ const employeePrompt = () => {
         .then((answers) => {
             var answerFirst = answers.first_name;
             var answerLast = answers.last_name;
-            var roleId;
-            var managerId;
-            db.query(`SELECT id FROM employee_role WHERE title = '${answers.role}';`, function (err, results2) {
-                roleId = results2[0].id;
-            });
-            db.query(`SELECT id FROM employee WHERE last_name = '${answers.manager}';`, function (err, results3) {
-                managerId = results3[0].id;
-            });
-            db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ( ?, ?, ?, ?);`, [answerFirst, answerLast, roleId, managerId], function (err, results) {
-                promptUser();
-                console.log(results);
-            });
+            var roleId1;
+            var managerId1;
+            
+                db.query(`SELECT id FROM employee_role WHERE title = '${answers.role}';`, function (err, results) {
+                    roleId1 = results[0].id;
+                });
+                db.query(`SELECT id FROM employee WHERE last_name = '${answers.manager}';`, function (err, results) {
+                    managerId1 = results[0].id;
+                });
+                db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);', [answerFirst, answerLast, roleId1, managerId1], function (err, results) {
+                    if (results) {console.log('Success.')};
+                    promptUser();
+                });     
         })
 }
 //Update role
@@ -177,10 +172,9 @@ const updateRole = async () => {
         db.query(`SELECT id FROM employee WHERE last_name = '${answers.employeeUpdate}';`, function (err, results3) {
             employeeId2 = results3[0].id;
         });
-
         db.query(`UPDATE employee SET role_id = ? WHERE id = ?;`, [roleId2, employeeId2], function (err, results) {
             promptUser();
-            console.log(results);
+            console.table('Update successful.');
         });
 
     });
@@ -200,7 +194,7 @@ const promptUser = () => {
         switch (expr) {
             case 'View All Employees':
                 db.query('SELECT * FROM employee;', async function (err, results) {
-                    console.log(results);
+                    console.table(results);
                     promptUser();
                 });
                 break;
@@ -212,7 +206,7 @@ const promptUser = () => {
                 break;
             case 'View All Roles':
                 db.query('SELECT * FROM employee_role', async function (err, results) {
-                    console.log(results);
+                    console.table(results);
                     promptUser();
                 });
                 break;
@@ -220,8 +214,8 @@ const promptUser = () => {
                 rolePrompt();
                 break;
             case 'View All Departments':
-                db.query('SELECT * FROM department', async function (err, results) {
-                    console.log(results);
+                db.query('SELECT * FROM department', async function (err, results, fields) {
+                    console.table(results);
                     promptUser();
                 });
                 break;
@@ -240,8 +234,3 @@ const promptUser = () => {
 }
 
 promptUser();
-
-app.listen(PORT, () => {
-   console.log(`Server running on port ${PORT}`);
-});
-  

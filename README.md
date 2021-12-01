@@ -10,6 +10,7 @@ Homework 12 SQL: Employee Tracker
 - [Contributors](#Contributors)
 - [Contacts](#Contacts)
 - [GitHub Repository Link](#GitHubRepositoryLink)
+- [Video Recording Link](#VideoRecordingLink)
 
 
 ## Description:
@@ -22,14 +23,14 @@ Homework 12 SQL: Employee Tracker
 
 ## Installation
     1. Download db and server files.
-    2. Install the following npm packages at the root of the server file: express, mysql2 and inquirer.
+    2. Install the following npm packages at the root of the server file: express, mysql2, console.table and inquirer.
     3. Execute schema.sql db file to create sql database and tables.
 
 ## Instructions
     1. Complete installation.
     2. Navigate to server.js root folder.
     3. Initiate application by typing 'node server.js' and type 'enter' key into termimal.
-    4. Use 'Up' and 'Down' arrow keys and 'enter' key to selct option 
+    4. Use 'Up' and 'Down' arrow keys and 'enter' key to selct option. Tyoe in information when prompted.
     
 ## Liscense
     MIT
@@ -42,3 +43,6 @@ calvinswomley@gmail.com | [https://github.com/calvinswomley](https://github.com/
 
 ## GitHub Repository Link
 [https://github.com/calvinswomley/Homework12-EmployeeTracker](https://github.com/calvinswomley/Homework12-EmployeeTracker)
+
+## Video Recording Link
+[https://watch.screencastify.com/v/ABfjYxUkooX28XRC4inK](https://watch.screencastify.com/v/ABfjYxUkooX28XRC4inK)
